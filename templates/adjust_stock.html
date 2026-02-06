@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if product %}
+<div class="card">
+    <div class="card-header">Adjust Stock - {{ product.name }}</div>
+    <p><strong>Current Stock:</strong> {{ product.quantity }}</p>
+    <p><strong>Minimum Stock:</strong> {{ product.min_quantity }}</p>
+    <p><strong>SKU:</strong> {{ product.sku }}</p>
+    
+    <form method="POST" style="margin-top: 1rem;">
+        <div class="form-group">
+            <label>Quantity Change * (positive to add, negative to subtract)</label>
+            <input type="number" name="quantity_change" required>
+        </div>
+        <button type="submit" class="btn">Adjust Stock</button>
+        <a href="{{ url_for('products') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% else %}
+<p>Product not found.</p>
+{% endif %}
+{% endblock %}

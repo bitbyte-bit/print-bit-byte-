@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Categories
+        <a href="{{ url_for('add_category') }}" class="btn" style="float: right;">+ Add Category</a>
+    </div>
+    
+    {% if categories %}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No categories found.</p>
+    {% endif %}
+</div>
+{% endblock %}

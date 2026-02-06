@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">Create New Order</div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Customer</label>
+            <select name="customer_id">
+                <option value="">-- Walk-in Customer --</option>
+                {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea name="notes" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn">Create Order</button>
+        <a href="{{ url_for('orders') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}

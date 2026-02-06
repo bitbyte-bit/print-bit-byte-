@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">Financial Summary</div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>${{ "%.2f"|format(summary.revenue) }}</h3>
+            <p>Total Revenue</p>
+        </div>
+        <div class="stat-card">
+            <h3>${{ "%.2f"|format(summary.total_cost) }}</h3>
+            <p>Total Cost</p>
+        </div>
+        <div class="stat-card" style="background: #d4edda;">
+            <h3>${{ "%.2f"|format(summary.profit) }}</h3>
+            <p>Profit</p>
+        </div>
+    </div>
+    
+    <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">By Transaction Type</h3>
+    {% if summary.by_type %}
+    <table class="table">
+        <tr>
+            <th>Type</th>
+            <th>Amount</th>
+        </tr>
+        {% for trans_type, amount in summary.by_type.items() %}
+        <tr>
+            <td>{{ trans_type|capitalize }}</td>
+            <td>${{ "%.2f"|format(amount) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No transactions found.</p>
+    {% endif %}
+</div>
+{% endblock %}

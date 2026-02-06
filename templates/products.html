@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Products
+        <a href="{{ url_for('add_product') }}" class="btn" style="float: right;">+ Add Product</a>
+        <a href="{{ url_for('low_stock') }}" class="btn btn-danger" style="float: right; margin-right: 0.5rem;">Low Stock</a>
+    </div>
+    
+    {% if products %}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.sku }}</td>
+            <td>${{ "%.2f"|format(product.price) }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>
+                <a href="{{ url_for('adjust_stock', product_id=product.id) }}" class="btn" style="padding: 0.25rem 0.5rem;">Adjust Stock</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No products found. <a href="{{ url_for('add_product') }}">Add your first product</a></p>
+    {% endif %}
+</div>
+{% endblock %}

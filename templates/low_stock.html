@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">Low Stock Alerts</div>
+    
+    {% if products %}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Current Stock</th>
+            <th>Minimum Stock</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.sku }}</td>
+            <td style="color: red; font-weight: bold;">{{ product.quantity }}</td>
+            <td>{{ product.min_quantity }}</td>
+            <td>
+                <a href="{{ url_for('adjust_stock', product_id=product.id) }}" class="btn" style="padding: 0.25rem 0.5rem;">Restock</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>All products are well stocked!</p>
+    {% endif %}
+</div>
+{% endblock %}

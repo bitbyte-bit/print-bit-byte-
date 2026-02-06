@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">Add New Customer</div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Name *</label>
+            <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email">
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <textarea name="address" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn">Add Customer</button>
+        <a href="{{ url_for('customers') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}

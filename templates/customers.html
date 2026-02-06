@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Customers
+        <a href="{{ url_for('add_customer') }}" class="btn" style="float: right;">+ Add Customer</a>
+    </div>
+    
+    {% if search_query %}
+    <p>Search results for "{{ search_query }}" (<a href="{{ url_for('customers') }}">Clear</a>)</p>
+    {% endif %}
+    
+    <form action="{{ url_for('search_customers') }}" method="GET" style="margin-bottom: 1rem;">
+        <input type="text" name="q" placeholder="Search customers..." style="width: 300px; padding: 0.5rem;">
+        <button type="submit" class="btn">Search</button>
+    </form>
+    
+    {% if customers %}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No customers found.</p>
+    {% endif %}
+</div>
+{% endblock %}

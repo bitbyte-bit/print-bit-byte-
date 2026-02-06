@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">Add New Product</div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Name *</label>
+            <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>SKU *</label>
+            <input type="text" name="sku" required>
+        </div>
+        <div class="form-group">
+            <label>Price *</label>
+            <input type="number" step="0.01" name="price" required>
+        </div>
+        <div class="form-group">
+            <label>Cost Price</label>
+            <input type="number" step="0.01" name="cost_price" value="0">
+        </div>
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" name="quantity" value="0">
+        </div>
+        <div class="form-group">
+            <label>Minimum Quantity</label>
+            <input type="number" name="min_quantity" value="0">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category_id">
+                <option value="">-- Select Category --</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Supplier</label>
+            <select name="supplier_id">
+                <option value="">-- Select Supplier --</option>
+                {% for supplier in suppliers %}
+                <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn">Add Product</button>
+        <a href="{{ url_for('products') }}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">Inventory Report</div>
+    
+    <div class="stats-grid" style="margin-bottom: 1.5rem;">
+        <div class="stat-card">
+            <h3>{{ report.total_products }}</h3>
+            <p>Total Products</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ report.total_items }}</h3>
+            <p>Total Items</p>
+        </div>
+        <div class="stat-card">
+            <h3>${{ "%.2f"|format(report.total_inventory_value) }}</h3>
+            <p>Inventory Value</p>
+        </div>
+        <div class="stat-card" style="background: #fff3cd;">
+            <h3>{{ report.low_stock_count }}</h3>
+            <p>Low Stock Items</p>
+        </div>
+    </div>
+    
+    {% if report.low_stock_products %}
+    <h3 style="margin-bottom: 1rem;">Low Stock Products</h3>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Current Stock</th>
+            <th>Minimum Stock</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in report.low_stock_products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td style="color: red; font-weight: bold;">{{ product.quantity }}</td>
+            <td>{{ product.min_quantity }}</td>
+            <td>
+                <a href="{{ url_for('adjust_stock', product_id=product.id) }}" class="btn" style="padding: 0.25rem 0.5rem;">Restock</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

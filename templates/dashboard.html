@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ stats.total_customers }}</h3>
+        <p>Total Customers</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.total_products }}</h3>
+        <p>Total Products</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.total_orders }}</h3>
+        <p>Total Orders</p>
+    </div>
+    <div class="stat-card">
+        <h3>${{ "%.2f"|format(stats.total_revenue) }}</h3>
+        <p>Total Revenue</p>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <div class="card-header">Quick Actions</div>
+    <div class="nav-menu">
+        <a href="{{ url_for('add_customer') }}">Add Customer</a>
+        <a href="{{ url_for('add_product') }}">Add Product</a>
+        <a href="{{ url_for('create_order') }}">Create Order</a>
+        <a href="{{ url_for('low_stock') }}">Low Stock Alerts ({{ stats.low_stock_alerts }})</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Orders by Status</div>
+    <table class="table">
+        <tr>
+            <th>Status</th>
+            <th>Count</th>
+        </tr>
+        {% for status, count in stats.orders_by_status.items() %}
+        <tr>
+            <td>{{ status|capitalize }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <div class="card-header">Recent Orders</div>
+    <table class="table">
+        <tr>
+            <th>Order ID</th>
+            <th>Status</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        {% for order in stats.recent_orders %}
+        <tr>
+            <td><a href="{{ url_for('view_order', order_id=order.id) }}">#{{ order.id }}</a></td>
+            <td>{{ order.status|capitalize }}</td>
+            <td>${{ "%.2f"|format(order.total_amount) }}</td>
+            <td>{{ order.order_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
